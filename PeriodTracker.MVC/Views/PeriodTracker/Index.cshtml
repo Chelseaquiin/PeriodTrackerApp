@@ -1,0 +1,47 @@
+﻿@model IEnumerator<PeriodTracker.BLL.Models.UserWithTrackerVM>
+    
+@if (@TempData["SuccessMessage"] !=  null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@foreach (var item in Model.Select((value, i) => new{ value, i}))
+{
+    <h4>@(item.i + 1). @item.value.Fullname's Tasks</h4>
+    <table class="table table-striped">
+
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tracker</th>
+            <th scope="col">StartDate</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @{
+            foreach (var task in item.value.Tasks.Select((value, i) => new{ value, i}))
+            {
+                <tr>
+                    <th scope="row">@(task.i + 1)</th>
+                    <td>@task.value.Title</td>
+                        <td>@task.value.Description</td>
+                        <td>@task.value.Priority</td>
+                        <td>@task.value.DueDate</td>
+
+                        <td>@task.value.Status</td>
+
+                </tr>
+            }
+        }
+
+
+
+
+        </tbody>
+    </table>
+
+}
